@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 using Taxi.web.Data;
 using Taxi.web.Data.Entities;
@@ -30,8 +29,8 @@ namespace Taxi.web.Controllers
                 return NotFound();
             }
 
-            var taxiEntity = await _context.Taxis.FindAsync(id);
-            
+            TaxiEntity taxiEntity = await _context.Taxis.FindAsync(id);
+
             if (taxiEntity == null)
             {
                 return NotFound();
@@ -41,6 +40,7 @@ namespace Taxi.web.Controllers
         }
 
         // GET: Taxis/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -71,7 +71,7 @@ namespace Taxi.web.Controllers
                 return NotFound();
             }
 
-            var taxiEntity = await _context.Taxis.FindAsync(id);
+            TaxiEntity taxiEntity = await _context.Taxis.FindAsync(id);
             if (taxiEntity == null)
             {
                 return NotFound();
@@ -93,13 +93,13 @@ namespace Taxi.web.Controllers
 
             if (ModelState.IsValid)
             {
-                              
-                    taxiEntity.Plaque = taxiEntity.Plaque.ToUpper();
-                    _context.Update(taxiEntity);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+
+                taxiEntity.Plaque = taxiEntity.Plaque.ToUpper();
+                _context.Update(taxiEntity);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-                return View(taxiEntity);
+            return View(taxiEntity);
         }
 
         // GET: Taxis/Delete/5
@@ -110,7 +110,7 @@ namespace Taxi.web.Controllers
                 return NotFound();
             }
 
-            var taxiEntity = await _context.Taxis.FindAsync(id);
+            TaxiEntity taxiEntity = await _context.Taxis.FindAsync(id);
             if (taxiEntity == null)
             {
                 return NotFound();
@@ -120,5 +120,5 @@ namespace Taxi.web.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-            }
+    }
 }
