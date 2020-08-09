@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taxi.Common", "Taxi.Common\Taxi.Common.csproj", "{4996E638-5330-43EB-A4EE-D75515E01571}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taxi.web", "Taxi.web\Taxi.web.csproj", "{56458E03-2D7C-4E50-AF7B-4F0E01740C91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taxi.Web", "Taxi.web\Taxi.Web.csproj", "{56458E03-2D7C-4E50-AF7B-4F0E01740C91}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taxi.Prism", "Taxi.Prism\Taxi.Prism\Taxi.Prism.csproj", "{DA19C622-AEA2-46E6-8117-72D4EB544461}"
 EndProject

@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 using Taxi.web.Data;
 using Taxi.web.Data.Entities;
 
 namespace Taxi.web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TaxisController : Controller
     {
         private readonly DataContext _context;
@@ -57,8 +60,24 @@ namespace Taxi.web.Controllers
             {
                 taxiEntity.Plaque = taxiEntity.Plaque.ToUpper();
                 _context.Add(taxiEntity);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+
+                //agregar verificar si no existe patente
+
+                catch (Exception ex)
+                {
+                    if(ex.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya hay un taxi con esa patente");
+                    }
+                    else
+                    ModelState.AddModelError(string.Empty, ex.InnerException.Message);
+                }
             }
             return View(taxiEntity);
         }
@@ -96,8 +115,23 @@ namespace Taxi.web.Controllers
 
                 taxiEntity.Plaque = taxiEntity.Plaque.ToUpper();
                 _context.Update(taxiEntity);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+
+                //agregar verificar si no existe patente
+
+                catch (Exception ex)
+                {
+                    if (ex.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya hay un taxi con esa patente");
+                    }
+                    else
+                        ModelState.AddModelError(string.Empty, ex.InnerException.Message);
+                }
             }
             return View(taxiEntity);
         }
